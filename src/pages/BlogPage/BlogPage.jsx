@@ -4,11 +4,10 @@ import HaLong from '../../assets/images/HaLong.jpg';
 import QuangNinh from '../../assets/images/QuangNinh.jpg';
 import DiaDiemCheckIn from '../../assets/images/DiaDiemCheckIn.jpg';
 import {useNavigate} from 'react-router-dom'
-// import { Link } from 'react-router-dom';
 import FooterComponent from '../../components/FooterComponent/FooterComponent'
 
+// TRang blog
 const BlogPage = () => {
-    // Tạo một mảng chứa dữ liệu cho các card
     const cardsData = [
         { title: "Top 5 resort nổi tiếng ở Hạ Long", details: "Nếu bạn chưa tìm được khu nghỉ dưỡng sang xịn tại Hạ Long, hãy để ViVu gợi ý giúp bạn 6 resort Hạ Long đáng để trải nghiệm trong chuyến du lịch khám phá vùng đất tươi đẹp nơi đây nhé!", src: HaLong },
         { title: "Khám phá 3 ngôi chùa nổi tiếng ở Bắc Ninh", details: "Không chỉ được biết đến là một địa điểm du lịch nổi tiếng bao gồm: Vịnh Hạ Long, đảo Tuần Châu, …Ngoài ra, thành phố du lịch Quảng Ninh còn thu hút du khách bởi những địa điểm du lịch tâm linh.", src: QuangNinh },
@@ -18,15 +17,6 @@ const BlogPage = () => {
         { title: "Top 5 resort nổi tiếng ở Hạ Long", details: "Hạ Long: Bí mật và Cuộc sống trong Vịnh - Khám phá và Cập nhật những tin tức hấp dẫn từ điểm đến tuyệt vời này.", src: 0  }
     ];
 
-    // const itemRender = (_, type, originalElement) => {
-    //     if (type === 'prev') {
-    //       return <a>Previous</a>;
-    //     }
-    //     if (type === 'next') {
-    //       return <a>Next</a>;
-    //     }
-    //     return originalElement;
-    //   };
 
     const navigate = useNavigate()
     const handleBlog = () => {
