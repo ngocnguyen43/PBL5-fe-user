@@ -9,10 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../redux/slides/userSlide.js';
 
-const SignInPage = () => {
+const SignInPage = () => { 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isShowPassword, setIsShowPassword] = useState(false);
+    
     // const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
