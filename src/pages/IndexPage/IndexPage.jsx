@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setScheduleData } from '../../redux/actions/dataScheduleActions';
 import { updateStation } from '../../redux/slides/findStationSlide.js';
 
+// Index
 const IndexPage = () => {
     const dispatch = useDispatch();
     const [departDate, setDepartDate] = useState(null);
@@ -248,6 +249,10 @@ const IndexPage = () => {
         }, secondsToGo * 1000);
     };
 
+
+
+
+    // Form
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             
