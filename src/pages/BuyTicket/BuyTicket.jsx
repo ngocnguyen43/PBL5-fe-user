@@ -1,3 +1,179 @@
+import { useState } from 'react';
+import Content1 from './Content1';
+import Content2 from './Content2';
+import Content3 from './Content3';
+import Content4 from './Content4';
+import { Steps, message } from 'antd';
+import { ButtonDone, ButtonNext, ButtonPrevious } from './style';
+import FooterComponent from '../../components/FooterComponent/FooterComponent'
+
+
+const { Step } = Steps;
+
+const BuyTicket = () => {
+    const [current, setCurrent] = useState(0);
+    const [paymentMethod, setPaymentMethod] = useState(1);
+
+    // const [dataSource, setDataSource] = useState([]);
+    const [dataSource, setDataSource] = useState([
+        {
+            key: '1',
+            name: 'HoaiBao',
+            type: '1',
+            documentNumber: '09009',
+            info: '',
+            price: '75000',
+            tags: 'Không có khuyến mại cho vé này',
+            total: '75000',
+        },
+        {
+            key: '2',
+            name: 'NhatVy',
+            type: '2',
+            documentNumber: '003923',
+            info: '',
+            price: '75000',
+            tags: 'Không có khuyến mại cho vé này',
+            total: '75000',
+        },
+    ]);
+    const [userBuyTicket, setUserBuyTicket] = useState({
+        id: '',
+        username: '',
+        email: '',
+        cccd: '',
+        phone: '',
+        phuongthuc: '',
+    });
+    const [inputValid, setInputValid] = useState(false); 
+
+    const handleInputChange = (value, key, dataIndex) => {
+        const newData = [...dataSource];
+        const index = newData.findIndex((item) => key === item.key);
+        if (index > -1) {
+            const item = newData[index];
+            newData.splice(index, 1, { ...item, [dataIndex]: value });
+            setDataSource(newData);
+        }
+    };
+
+    const handleBuyTicketChange = (field, value) => {
+        setUserBuyTicket(prevState => ({
+            ...prevState,
+            [field]: value
+        }));
+    };    
+    
+    const handleDelete = (key) => {
+        const newData = [...dataSource];
+        setDataSource(newData.filter((item) => item.key !== key));
+    };
+
+    // const handleAddNewRow = () => {
+    //     const newData = [...dataSource];
+    //     newData.push({
+    //         key: (dataSource.length + 1).toString(),
+    //         name: '',
+    //         type: '',
+    //         documentNumber: '',
+    //         age: 0,
+    //         address: '',
+    //         tags: [],
+    //         info: '',
+    //     });
+    //     setDataSource(newData);
+    // };
+
+    const handleDataSourceChange = (newDataSource) => {
+        setDataSource(newDataSource);
+    };
+    
+    const onChangePaymentMethod = (e) => {
+        setPaymentMethod(parseInt(e.target.value));
+    };
+    
+
+    const next = () => {
+        if (!inputValid) {
+            message.error('Vui lòng điền đầy đủ thông tin trước khi chuyển sang bước tiếp theo');
+            return;
+        }
+        setCurrent(current + 1);
+    };
+
+    const prev = () => {
+        setCurrent(current - 1);
+    };
+
+    const handleInputValidation = (isValid) => {
+        setInputValid(isValid);
+    };
+
+    const steps = [
+        {
+            title: 'Nhập thông tin khách hàng',
+            content: <Content1 dataSource={dataSource} 
+                                handleInputChange={handleInputChange} 
+                                handleBuyTicketChange={handleBuyTicketChange} 
+                                handleDelete={handleDelete} 
+                                handleDataSourceChange={handleDataSourceChange} 
+                                handleInputValidation={handleInputValidation}
+    />, 
+        },
+        {
+            title: 'Xác nhận thông tin',
+            content: <Content2 paymentMethod={paymentMethod} 
+                                onChangePaymentMethod={onChangePaymentMethod} 
+                                dataSource={dataSource} 
+                                userBuyTicket={userBuyTicket} />,
+            
+        },
+        {
+            title: 'Thanh toán',
+            content: <Content3/>,
+        },
+        {
+            title: 'Hoàn tất',
+            content: <Content4/>,
+        },
+    ];
+
+    return (
+        <div>
+            <div style={{ padding: '3% 10%', height: 'auto', minHeight: '50vh'}}>
+                <Steps current={current}>
+                    {steps.map((item, index) => (
+                        <Step key={item.title} title={item.title} className={index} />
+                    ))}
+                </Steps>
+                <div className="steps-content">{steps[current].content}</div>
+                <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                    {current > 0 && (
+                        <ButtonPrevious style={{ margin: '8px' }} onClick={() => prev()}>
+                            Previous
+                        </ButtonPrevious>
+                    )}
+                    {current < steps.length - 1 && (
+                        <ButtonNext type="primary" onClick={() => next()}>
+                            Next
+                        </ButtonNext>
+                    )}
+                    {current === steps.length - 1 && (
+                        <ButtonDone type="primary" onClick={() => message.success('Processing complete!')}>
+                            Done
+                        </ButtonDone>
+                    )}
+                </div>
+            </div>
+            <FooterComponent></FooterComponent>
+        </div>
+    );
+};
+
+export default BuyTicket;
+
+
+
 // import React, { useState } from 'react';
 // import { CSSProperties } from 'react';
 // import { RadioChangeEvent } from 'antd';
@@ -301,176 +477,3 @@
 
 
 // Main.tsx
-import { useState } from 'react';
-import Content1 from './Content1';
-import Content2 from './Content2';
-import Content3 from './Content3';
-import Content4 from './Content4';
-import { Steps, message } from 'antd';
-import { ButtonDone, ButtonNext, ButtonPrevious } from './style';
-import FooterComponent from '../../components/FooterComponent/FooterComponent'
-
-
-const { Step } = Steps;
-
-const BuyTicket = () => {
-    const [current, setCurrent] = useState(0);
-    const [paymentMethod, setPaymentMethod] = useState(1);
-
-    // const [dataSource, setDataSource] = useState([]);
-    const [dataSource, setDataSource] = useState([
-        {
-            key: '1',
-            name: 'HoaiBao',
-            type: '1',
-            documentNumber: '09009',
-            info: '',
-            price: '75000',
-            tags: 'Không có khuyến mại cho vé này',
-            total: '75000',
-        },
-        {
-            key: '2',
-            name: 'NhatVy',
-            type: '2',
-            documentNumber: '003923',
-            info: '',
-            price: '75000',
-            tags: 'Không có khuyến mại cho vé này',
-            total: '75000',
-        },
-    ]);
-    const [userBuyTicket, setUserBuyTicket] = useState({
-        id: '',
-        username: '',
-        email: '',
-        cccd: '',
-        phone: '',
-        phuongthuc: '',
-    });
-    const [inputValid, setInputValid] = useState(false); 
-
-    const handleInputChange = (value, key, dataIndex) => {
-        const newData = [...dataSource];
-        const index = newData.findIndex((item) => key === item.key);
-        if (index > -1) {
-            const item = newData[index];
-            newData.splice(index, 1, { ...item, [dataIndex]: value });
-            setDataSource(newData);
-        }
-    };
-
-    const handleBuyTicketChange = (field, value) => {
-        setUserBuyTicket(prevState => ({
-            ...prevState,
-            [field]: value
-        }));
-    };    
-    
-    const handleDelete = (key) => {
-        const newData = [...dataSource];
-        setDataSource(newData.filter((item) => item.key !== key));
-    };
-
-    // const handleAddNewRow = () => {
-    //     const newData = [...dataSource];
-    //     newData.push({
-    //         key: (dataSource.length + 1).toString(),
-    //         name: '',
-    //         type: '',
-    //         documentNumber: '',
-    //         age: 0,
-    //         address: '',
-    //         tags: [],
-    //         info: '',
-    //     });
-    //     setDataSource(newData);
-    // };
-
-    const handleDataSourceChange = (newDataSource) => {
-        setDataSource(newDataSource);
-    };
-    
-    const onChangePaymentMethod = (e) => {
-        setPaymentMethod(parseInt(e.target.value));
-    };
-    
-
-    const next = () => {
-        if (!inputValid) {
-            message.error('Vui lòng điền đầy đủ thông tin trước khi chuyển sang bước tiếp theo');
-            return;
-        }
-        setCurrent(current + 1);
-    };
-
-    const prev = () => {
-        setCurrent(current - 1);
-    };
-
-    const handleInputValidation = (isValid) => {
-        setInputValid(isValid);
-    };
-
-    const steps = [
-        {
-            title: 'Nhập thông tin khách hàng',
-            content: <Content1 dataSource={dataSource} 
-                                handleInputChange={handleInputChange} 
-                                handleBuyTicketChange={handleBuyTicketChange} 
-                                handleDelete={handleDelete} 
-                                handleDataSourceChange={handleDataSourceChange} 
-                                handleInputValidation={handleInputValidation}
-    />, 
-        },
-        {
-            title: 'Xác nhận thông tin',
-            content: <Content2 paymentMethod={paymentMethod} 
-                                onChangePaymentMethod={onChangePaymentMethod} 
-                                dataSource={dataSource} 
-                                userBuyTicket={userBuyTicket} />,
-            
-        },
-        {
-            title: 'Thanh toán',
-            content: <Content3/>,
-        },
-        {
-            title: 'Hoàn tất',
-            content: <Content4/>,
-        },
-    ];
-
-    return (
-        <div>
-            <div style={{ padding: '3% 10%', height: 'auto', minHeight: '50vh'}}>
-                <Steps current={current}>
-                    {steps.map((item, index) => (
-                        <Step key={item.title} title={item.title} className={index} />
-                    ))}
-                </Steps>
-                <div className="steps-content">{steps[current].content}</div>
-                <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    {current > 0 && (
-                        <ButtonPrevious style={{ margin: '8px' }} onClick={() => prev()}>
-                            Previous
-                        </ButtonPrevious>
-                    )}
-                    {current < steps.length - 1 && (
-                        <ButtonNext type="primary" onClick={() => next()}>
-                            Next
-                        </ButtonNext>
-                    )}
-                    {current === steps.length - 1 && (
-                        <ButtonDone type="primary" onClick={() => message.success('Processing complete!')}>
-                            Done
-                        </ButtonDone>
-                    )}
-                </div>
-            </div>
-            <FooterComponent></FooterComponent>
-        </div>
-    );
-};
-
-export default BuyTicket;
