@@ -3,8 +3,9 @@ import bgFb from '../../assets/images/bg_full.jpg';
 import { HomeOutlined} from '@ant-design/icons';
 import imgHaLong from '../../assets/images/HaLong.jpg';
 import {useNavigate} from 'react-router-dom'
-// import FooterComponent from '../../components/FooterComponent/FooterComponent'
 
+
+//Detail Blog
 const BlogPage = () => {
     const currentDate = new Date(); // Lấy ngày hiện tại
     const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
