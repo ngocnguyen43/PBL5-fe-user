@@ -74,7 +74,6 @@ const ActionButton = styled.a`
 const HistoryUser = () => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user);
-  // const [requestData, setRequestData] = useState([]);
   const [reqData, setReqData] = useState([]);
 
   const timestampToDatetime = timestamp => {
