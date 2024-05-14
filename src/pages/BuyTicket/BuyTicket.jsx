@@ -69,20 +69,6 @@ const BuyTicket = () => {
         setDataSource(newData.filter((item) => item.key !== key));
     };
 
-    // const handleAddNewRow = () => {
-    //     const newData = [...dataSource];
-    //     newData.push({
-    //         key: (dataSource.length + 1).toString(),
-    //         name: '',
-    //         type: '',
-    //         documentNumber: '',
-    //         age: 0,
-    //         address: '',
-    //         tags: [],
-    //         info: '',
-    //     });
-    //     setDataSource(newData);
-    // };
 
     const handleDataSourceChange = (newDataSource) => {
         setDataSource(newDataSource);
