@@ -1,88 +1,86 @@
-import { useState } from "react";
-import { Container, WrapperContainerLeft, WrapperContainerRight, WrapperTextLight } from "./style";
-import InputForm from "../../components/InputForm/InputForm.jsx";
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import imageLogo from '../../assets/images/logo-login.png'
-import { Image, Spin } from "antd";
-import { EyeFilled, EyeInvisibleFilled, LoadingOutlined } from '@ant-design/icons'
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { updateUser } from '../../redux/slides/userSlide.js';
+import { useState } from "react"; 
+import { Container, WrapperContainerLeft, WrapperContainerRight, WrapperTextLight } from "./style";  
+import InputForm from "../../components/InputForm/InputForm.jsx"; 
+import ButtonComponent from "../../components/ButtonComponent/ButtonComponent"; 
+import imageLogo from '../../assets/images/logo-login.png' 
+import { Image, Spin } from "antd"; 
+import { EyeFilled, EyeInvisibleFilled, LoadingOutlined } from '@ant-design/icons' 
+import { useNavigate } from "react-router-dom"; 
+import { useDispatch } from 'react-redux'; 
+import { updateUser } from '../../redux/slides/userSlide.js'; 
+ 
+const SignInPage = () => {   
+    const navigate = useNavigate();  
+    const dispatch = useDispatch();  
+    const [isShowPassword, setIsShowPassword] = useState(false);  
 
-const SignInPage = () => { 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [isShowPassword, setIsShowPassword] = useState(false);
+    // const [email, setEmail] = useState(''); 
+    const [username, setUsername] = useState(''); 
+    const [password, setPassword] = useState(''); 
+    const [isLoading, setIsLoading] = useState(false); 
 
+    const handleLogin = (e) => {  
+        e.preventDefault(); 
+        setIsLoading(true); 
 
+        const formData = new FormData(); 
+        formData.append("username", username); 
+        formData.append("password", password); 
     
-    // const [email, setEmail] = useState('');
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+        console.log(username+"-"+password) 
+        fetch("http://localhost:8080/api/v1/auth/login", { 
+            method: "POST", 
+            body: formData,  
+        }) 
+        .then((response) => response.json()) 
+        .then((data) => { 
+            setIsLoading(false); 
+            console.log(data.meta.error+"\n") 
+            if (data.meta.status_code === 401) { 
+                alert(data.meta.error); 
+            } else if (data.meta.status_code === 200 && data.data.result.accessToken) { 
+                dispatch(updateUser({ 
+                    // name: '', 
+                    // email: '', 
+                    access_token: data.data.result.accessToken, 
+                    // address: '', 
+                    // phone: '', 
+                    // avatar: '' 
+                })); 
+                navigate("/"); 
+                // handleMe(data.data.result.accessToken); 
+            } else { 
+                alert("Đăng nhập không thành công. Vui lòng thử lại."); 
+            } 
+        })         
+        .catch((error) => { 
+            setIsLoading(false); 
+            console.error('Lỗi:', error); 
+            alert("Có lỗi xảy ra. Vui lòng thử lại sau."); 
+        }); 
+    }; 
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        setIsLoading(true);
-
-        const formData = new FormData();
-        formData.append("username", username);
-        formData.append("password", password);
-    
-        console.log(username+"-"+password)
-        fetch("http://localhost:8080/api/v1/auth/login", {
-            method: "POST",
-            body: formData,
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            setIsLoading(false);
-            console.log(data.meta.error+"\n")
-            if (data.meta.status_code === 401) {
-                alert(data.meta.error);
-            } else if (data.meta.status_code === 200 && data.data.result.accessToken) {
-                dispatch(updateUser({
-                    // name: '',
-                    // email: '',
-                    access_token: data.data.result.accessToken,
-                    // address: '',
-                    // phone: '',
-                    // avatar: ''
-                }));
-                navigate("/");
-                // handleMe(data.data.result.accessToken);
-            } else {
-                alert("Đăng nhập không thành công. Vui lòng thử lại.");
-            }
-        })        
-        .catch((error) => {
-            setIsLoading(false);
-            console.error('Lỗi:', error);
-            alert("Có lỗi xảy ra. Vui lòng thử lại sau.");
-        });
-    };
-
-    // const handleMe = (accessToken) => {    
-    //     fetch("http://localhost:8080/api/v1/me", {
-    //         method: "GET",
-    //         headers: {
-    //             'Authorization': `Bearer ${accessToken}`,
-    //             'Content-Type': 'application/json'
-    //         },
-    //     })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //         setIsLoading(false);
-    //         console.log("status_code: " + data.meta.status_code);
-    //         if (data.meta.status_code === 401) {
-    //             alert(data.meta.error);
-    //         } else if (data.meta.status_code === 200) {
-    //             dispatch(updateUser({
-    //                 name: data.data.result.fullName,
-    //                 email: data.data.result.email,
-    //                 phone: data.data.result.phoneNumber
-    //             }));
-
+    // const handleMe = (accessToken) => { 
+    //     fetch("http://localhost:8080/api/v1/me", {  
+    //         method: "GET", 
+    //         headers: { 
+    //             'Authorization': `Bearer ${accessToken}`,  
+    //             'Content-Type': 'application/json' 
+    //         }, 
+    //     }) 
+    //     .then((response) => response.json()) 
+    //     .then((data) => { 
+    //         setIsLoading(false); 
+    //         console.log("status_code: " + data.meta.status_code); 
+    //         if (data.meta.status_code === 401) { 
+    //             alert(data.meta.error); 
+    //         } else if (data.meta.status_code === 200) { 
+    //             dispatch(updateUser({ 
+    //                 name: data.data.result.fullName, 
+    //                 email: data.data.result.email, 
+    //                 phone: data.data.result.phoneNumber 
+    //             })); 
+ 
     //             navigate("/");
     //         } else {
     //             alert("Đăng nhập không thành công. Vui lòng thử lại.");
@@ -95,20 +93,20 @@ const SignInPage = () => {
     //     });
     // };
 
-    const handleNavigateSignUp = () => {
-        navigate('/sign-up');
-    };
-
-    // const handleOnchangeEmail = (value) => {
-    //     setEmail(value);
-    // };
+    const handleNavigateSignUp = () => { 
+        navigate('/sign-up'); 
+    }; 
+ 
+    // const handleOnchangeEmail = (value) => { 
+    //     setEmail(value); 
+    // }; 
     
-    const handleOnchangeUsername = (value) => {
-        setUsername(value);
-    };
-    const handleOnchangePassword = (value) => {
-        setPassword(value);
-    };
+    const handleOnchangeUsername = (value) => { 
+        setUsername(value); 
+    }; 
+    const handleOnchangePassword = (value) => { 
+        setPassword(value); 
+    }; 
     
     return (
         <Container>
