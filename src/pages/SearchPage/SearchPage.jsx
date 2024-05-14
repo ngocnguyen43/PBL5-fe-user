@@ -10,8 +10,7 @@ import FooterComponent from '../../components/FooterComponent/FooterComponent'
 
 import { useSelector } from 'react-redux';
 
-// const { RangePicker } = DatePicker;
-
+//Tim kiem
 const SearchPage = () => {
     const [departDate, setDepartDate] = useState(moment());
     const [returnDate, setReturnDate] = useState(null); // Thêm state cho ngày về
@@ -19,7 +18,6 @@ const SearchPage = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     
-    // const [authenticated, setAuthenticated] = useState(false);
 
     const user = useSelector(state => state.user);    
     const station = useSelector(state => state.station);
@@ -32,11 +30,6 @@ const SearchPage = () => {
         start: '',
         arrival: ''
     });
-
-    // const scheduleData = useSelector((state) => state.dataSchedule.scheduleData);
-
-    // const departurePoint = station && station.start ? station.start  : '';
-    // const arrivalPoint = station && station.arrival ? station.arrival : '';
 
     const idIn = 'Ha Noi';
     // const idOut = 'Da Nang';
