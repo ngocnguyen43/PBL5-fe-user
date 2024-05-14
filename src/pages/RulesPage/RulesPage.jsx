@@ -3,18 +3,8 @@ import { CaretRightOutlined  } from '@ant-design/icons';
 import bgFb from '../../assets/images/bg_full.jpg';
 import { Collapse, theme } from 'antd';
 
+// Quy định
 const RegulationsPage = () => {
-    // const [expandStates, setExpandStates] = useState({
-    //     item1: true,
-    //     item2: true,
-    // });
-
-    // const toggleExpand = (itemName) => {
-    //     setExpandStates(prevState => ({
-    //         ...prevState,
-    //         [itemName]: !prevState[itemName]
-    //     }));
-    // };
         const comments = [
             "1.1. Đồng ý với các điều khoản sử dụng:",
             "Khi sử dụng Website Thương mại Điện tử Mixivivu.com (sau đây gọi tắt là “Website”), Quý khách đã mặc nhiên chấp thuận các điều khoản và điều kiện sử dụng (sau đây gọi tắt là “Điều kiện Sử dụng”) được quy định dưới đây. Để biết được các sửa đổi mới nhất, Quý khách nên thường xuyên kiểm tra lại “Điều kiện Sử dụng”. Chúng tôi có quyền thay đổi, điều chỉnh, thêm hay bớt các nội dung của “Điều kiện Sử dụng” tại bất kỳ thời điểm nào. Nếu Quý khách vẫn tiếp tục sử dụng Website sau khi có các thay đổi như vậy thì có nghĩa là Quý khách đã chấp thuận các thay đổi đó.",
