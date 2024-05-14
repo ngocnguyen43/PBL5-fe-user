@@ -7,6 +7,7 @@ import { Image } from "antd";
 import { EyeFilled, EyeInvisibleFilled } from '@ant-design/icons'
 import { useNavigate } from "react-router-dom";
 
+// Đăng ký
 const SignUpPage = () => {
     const navigate = useNavigate();
     const [isShowPassword, setIsShowPassword] = useState(false);
@@ -99,7 +100,7 @@ const SignUpPage = () => {
     const handleNavigateSignIn = () => {
         navigate('/sign-in');
     };
-
+// form
     return (
         <Container>
             <div style={{ width: '800px', height: '500px', borderRadius: '6px', background: '#fff', display: 'flex' }}>
